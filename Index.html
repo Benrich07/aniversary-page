@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Happy 1st Anniversary ❤️</title>
+<meta name="theme-color" content="#ee9ca7">
+<style>
+  :root { --bg1:#ffdde1; --bg2:#ee9ca7; --text:#ffffff; --accent:#ffffff; }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(1200px 800px at 50% -10%, rgba(255,255,255,.15), transparent 60%),
+      linear-gradient(135deg, var(--bg1), var(--bg2));
+    overflow-x: hidden;
+  }
+  .container { min-height: 100%; display: grid; place-items: center; padding: 24px; text-align: center; position: relative; }
+  h1 { font-weight: 800; letter-spacing: .5px; font-size: clamp(32px, 6vw, 56px); margin: 0 0 14px; text-shadow: 0 10px 30px rgba(0,0,0,.15); }
+  .sub { opacity:.95; font-size: clamp(16px, 2.8vw, 18px); margin-bottom: 18px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 0; border-radius: 999px; padding: 14px 22px;
+    font-size: 16px; background: var(--accent); color: #ee9ca7; font-weight: 700;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15); cursor: pointer; user-select: none;
+  }
+  .btn:active { transform: translateY(1px); }
+  .messages { margin-top: 22px; max-width: 760px; margin-inline: auto; }
+  .message {
+    opacity: 0; transform: translateY(10px); filter: blur(2px);
+    font-size: clamp(18px, 3.6vw, 24px); line-height: 1.45; margin: 14px 0;
+    transition: opacity .8s ease, transform .8s ease, filter .8s ease;
+  }
+  .message.show { opacity: 1; transform: translateY(0); filter: blur(0); }
+  .final { font-size: clamp(28px, 7vw, 44px); font-weight: 800; margin-top: 24px; }
+  .glow { text-shadow: 0 0 12px rgba(255,255,255,.6), 0 0 30px rgba(255,255,255,.35); }
+  footer { position: fixed; left: 0; right: 0; bottom: 10px; text-align: center; opacity: .9; font-size: 14px; }
+
+  /* Floating hearts background */
+  .hearts { position: fixed; inset: 0; overflow: hidden; z-index: -1; pointer-events: none; }
+  .heart {
+    position: absolute; width: 18px; height: 18px; background: #fff;
+    transform: rotate(45deg);
+    animation: rise var(--dur) linear infinite;
+    opacity: .35;
+  }
+  .heart:before, .heart:after {
+    content: ""; position: absolute; width: 18px; height: 18px; background: #fff; border-radius: 50%;
+  }
+  .heart:before { left: -9px; top: 0; }
+  .heart:after { top: -9px; left: 0; }
+  @keyframes rise {
+    0%   { transform: translateY(0) rotate(45deg) scale(var(--scale)); }
+    100% { transform: translateY(-110vh) rotate(45deg) scale(var(--scale)); }
+  }
+</style>
+</head>
+<body>
+  <div class="hearts" id="hearts"></div>
+
+  <div class="container">
+    <main>
+      <h1>Happy 1st Anniversary ❤️</h1>
+      <p class="sub">To my love — a little page made just for you.</p>
+      <button id="playBtn" class="btn">💌 Show Messages</button>
+      <div id="messages" class="messages" aria-live="polite"></div>
+    </main>
+  </div>
+
+  <footer>Made with ❤️ by Richuttan</footer>
+
+<script>
+  // Floating hearts
+  (function makeHearts() {
+    const wrap = document.getElementById('hearts');
+    const count = 24;
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.bottom = (-10 - Math.random() * 20) + 'vh';
+      h.style.setProperty('--dur', (12 + Math.random() * 10) + 's');
+      h.style.setProperty('--scale', (0.6 + Math.random() * 1.4).toFixed(2));
+      wrap.appendChild(h);
+    }
+  })();
+
+  // Personal messages
+  const messages = [
+    "One year ago, you walked into my life and made it brighter.",
+    "Every day with you feels like my favorite song on repeat.",
+    "Your smile is my comfort, your love is my strength.",
+    "Thank you for loving me, even when I’m a little silly.",
+    "Here’s to many more laughs, hugs, and adventures together.",
+    "I love you forever ❤️"
+  ];
+
+  const btn = document.getElementById('playBtn');
+  const msgContainer = document.getElementById('messages');
+
+  function revealMessages() {
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i < messages.length) {
+        const p = document.createElement('p');
+        p.className = 'message';
+        p.textContent = messages[i];
+        if (i === messages.length - 1) { p.classList.add('final','glow'); }
+        msgContainer.appendChild(p);
+        setTimeout(() => p.classList.add('show'), 30);
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 2600);
+  }
+
+  btn.addEventListener('click', () => {
+    btn.style.display = 'none';
+    revealMessages();
+  });
+</script>
+</body>
+</html>
